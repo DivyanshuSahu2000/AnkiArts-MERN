@@ -1,0 +1,61 @@
+import { useContext } from "react";
+import { FaShoppingCart } from "react-icons/fa";
+import { Link } from "react-router";
+import { ItemContext, ItemProvider } from "../../context/ItemContext";
+import { CartContext } from "../../context/CartContext";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+const Paintings = () => {
+  const { dummyPaintings } = useContext(ItemContext);
+  const { addToCart } = useContext(CartContext);
+  const handleAddToCart = (painting) => {
+    addToCart(painting);
+    toast.success(`${painting.title} added to cart 🛒`, {
+      position: "bottom-right",
+      autoClose: 1000,
+      theme: "dark",
+    });
+  };
+  return (
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 p-6">
+      {dummyPaintings.map((painting) => (
+        <div
+          key={painting.id}
+          className="borde-2 bg-zinc-100 rounded-xl p-3  
+                       shadow-xl hover:shadow-2xl transition-transform transform hover:-translate-y-2 hover:scale-105 duration-300"
+        >
+          <Link key={painting.id} to={`/paintings/${painting.id}`}>
+            <div className="overflow-hidden rounded-lg">
+              <img
+                src={`${painting.image}`}
+                alt={painting.title}
+                className="w-full h-48 object-cover rounded-lg transition-transform duration-500 hover:scale-110"
+              />
+            </div>
+          </Link>
+          <div className="flex gap-0.5 justify-between">
+            <h3 className="text-lg font-bold mt-3">{painting.title}</h3>
+            <h3 className="text-lg font-medium text-gray-700 mt-3">
+              {painting.size}
+            </h3>
+            <h4 className="text-gray-600 text-lg  mt-3 font-medium">
+              ₹{painting.price}
+            </h4>
+          </div>
+          <div className="items-center justify-center flex">
+            <button
+              onClick={() => handleAddToCart(painting)}
+              className="mt-3 w-3/4 gap-1 items-center justify-center flex bg-[#2e2856] hover:bg-[#4b3ea1] text-white font-medium px-4 py-2 rounded-lg shadow-md  hover:shadow-xl transition-all duration-300 active:scale-95"
+            >
+              Add to Cart
+              <FaShoppingCart />
+            </button>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+export default Paintings;
