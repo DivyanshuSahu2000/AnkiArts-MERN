@@ -19,7 +19,7 @@ const PaintingDetails = () => {
       theme: "dark",
     });
   };
-  const painting = dummyPaintings.find((p) => p.id == id);
+  const painting = dummyPaintings.find((p) => p._id == id);
   if (!painting) return <p>Painting not found.</p>;
 
   return (

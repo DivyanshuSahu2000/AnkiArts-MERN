@@ -26,7 +26,7 @@ const router = createBrowserRouter([
       { path: "/login", element: <Login /> },
       { path: "/cart", element: <Cart /> },
       { path: "/paintings/:id", element: <PaintingDetails /> },
-      { path: "/paintingtype/:type", element: <PaintingType /> },
+      { path: "/paintingtype/:category", element: <PaintingType /> },
     ],
   },
 ]);

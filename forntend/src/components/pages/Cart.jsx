@@ -58,7 +58,7 @@ const Cart = () => {
                   key={item.cartId}
                   className="flex items-center justify-between border-b pb-2"
                 >
-                  <Link key={item.id} to={`/paintings/${item.id}`}>
+                  <Link key={item.id} to={`/paintings/${item._id}`}>
                     <div className="flex items-center gap-4">
                       <div className="relative">
                         <img

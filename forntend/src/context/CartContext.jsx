@@ -18,10 +18,10 @@ const CartProvider = ({ children }) => {
 
   const addToCart = (painting) => {
     setCart((prev) => {
-      const existingItem = prev.find((item) => item.id === painting.id);
+      const existingItem = prev.find((item) => item._id === painting._id);
       if (existingItem) {
         return prev.map((item) =>
-          item.id === painting.id ? { ...item, qty: item.qty + 1 } : item
+          item._id === painting._id ? { ...item, qty: item.qty + 1 } : item
         );
       }
       return [...prev, { ...painting, qty: 1, cartId: uuidv4() }];

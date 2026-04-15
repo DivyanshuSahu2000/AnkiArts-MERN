@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const Paintings = () => {
-  const { dummyPaintings } = useContext(ItemContext);
+  const { dummyPaintings, loading } = useContext(ItemContext);
   const { addToCart } = useContext(CartContext);
   const handleAddToCart = (painting) => {
     addToCart(painting);
@@ -17,15 +17,29 @@ const Paintings = () => {
       theme: "dark",
     });
   };
+  if (loading) {
+    return (
+      <div className="flex flex-col items-center justify-center h-screen">
+        <div className="loader"></div>
+        <h4>Loading...</h4>
+      </div>
+    );
+  }
+
+  // ✅ Empty state
+  if (dummyPaintings.length === 0) {
+    return <h1 className="text-center mt-10">No paintings found</h1>;
+  }
+
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 p-6">
       {dummyPaintings.map((painting) => (
         <div
-          key={painting.id}
+          key={painting._id}
           className="borde-2 bg-zinc-100 rounded-xl p-3  
                        shadow-xl hover:shadow-2xl transition-transform transform hover:-translate-y-2 hover:scale-105 duration-300"
         >
-          <Link key={painting.id} to={`/paintings/${painting.id}`}>
+          <Link key={painting._id} to={`/paintings/${painting._id}`}>
             <div className="overflow-hidden rounded-lg">
               <img
                 src={`${painting.image}`}

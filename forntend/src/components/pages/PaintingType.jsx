@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const Paintings = () => {
-  const { type } = useParams();
+  const { category } = useParams();
   const { dummyPaintings } = useContext(ItemContext);
 
   const { addToCart } = useContext(CartContext);
@@ -19,27 +19,27 @@ const Paintings = () => {
       theme: "dark",
     });
   };
-  const filteredPaintings = type
+  const filteredPaintings = category
     ? dummyPaintings.filter(
         (p) =>
-          p.type.replace(/\s+/g, "").toLowerCase() ===
-          type.replace(/\s+/g, "").toLowerCase()
+          p.category.replace(/\s+/g, "").toLowerCase() ===
+          category.replace(/\s+/g, "").toLowerCase()
       )
     : dummyPaintings;
 
   return (
     <div className="flex flex-col items-center p-3 m-2">
       <h1 className="text-2xl md:text-4xl font-medium  relative after:content-[''] after:block after:w-full after:h-[2px] after:bg-gray-300 after:mt-1">
-        {type}
+        {category}
       </h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 p-6">
         {filteredPaintings.map((painting) => (
           <div
-            key={painting.id}
+            key={painting._id}
             className="borde-2 bg-zinc-100 rounded-xl p-3  
                      shadow-xl hover:shadow-2xl transition-transform transform hover:-translate-y-2 hover:scale-105 duration-300"
           >
-            <Link to={`/paintings/${painting.id}`}>
+            <Link to={`/paintings/${painting._id}`}>
               <div className="overflow-hidden rounded-lg">
                 <img
                   src={`${painting.image}`}

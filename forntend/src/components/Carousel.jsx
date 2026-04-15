@@ -4,6 +4,8 @@ import { Link } from "react-router";
 
 const Carousel = () => {
   const { dummyPaintings } = useContext(ItemContext);
+  console.log(dummyPaintings);
+
   const [current, setCurrent] = useState(0);
 
   const carouselItems = dummyPaintings.slice(0, 5);
@@ -24,8 +26,8 @@ const Carousel = () => {
         {carouselItems.map((item, i) => (
           <Link
             className="w-full h-[250px] sm:h-[350px] md:h-[500px] lg:h-[650px] flex-shrink-0 flex items-center justify-center bg-gray-200"
-            key={item.id}
-            to={`/paintings/${item.id}`}
+            key={item._id}
+            to={`/paintings/${item._id}`}
             aria-label="painting"
           >
             <div className="w-full h-[250px] sm:h-[350px] md:h-[500px] lg:h-[650px] flex-shrink-0 flex items-center justify-center bg-gray-200">
