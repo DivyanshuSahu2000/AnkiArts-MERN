@@ -2,10 +2,16 @@ import { RiInstagramFill } from "react-icons/ri";
 import { FaMapMarkerAlt } from "react-icons/fa";
 import { IoMdMail } from "react-icons/io";
 import { IoMdCall } from "react-icons/io";
-import React from "react";
+import React, { useContext } from "react";
 import { IoLogoWhatsapp } from "react-icons/io";
+import { ItemContext } from "../../context/ItemContext";
+import Loader from "../Loader";
 
 const Contact = () => {
+  const { loading } = useContext(ItemContext);
+  if (loading) {
+    return <Loader />;
+  }
   return (
     <div
       className="bg-gray-200 h-[85vh] z-10 text-white inset-0 bg-cover sm:bg-contain bg-center bg-no-repeat opacity-75"

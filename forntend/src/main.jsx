@@ -14,12 +14,14 @@ import { ItemProvider } from "./context/ItemContext.jsx";
 import PaintingType from "./components/pages/PaintingType.jsx";
 import { CartProvider } from "./context/CartContext.jsx";
 import Cart from "./components/pages/Cart.jsx";
+import Admin from "./components/pages/admin/Admin.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
     children: [
       { path: "/", element: <Home /> },
+      { path: "/admin", element: <Admin /> },
       { path: "/about", element: <About /> },
       { path: "/contact", element: <Contact /> },
       { path: "/signup", element: <Signup /> },

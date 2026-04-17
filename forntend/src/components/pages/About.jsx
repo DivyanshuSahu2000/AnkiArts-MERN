@@ -1,6 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
+import { ItemContext } from "../../context/ItemContext";
+import Loader from "../Loader";
 
 const About = () => {
+  const { loading } = useContext(ItemContext);
+  if (loading) {
+    return <Loader />;
+  }
   return (
     <div className="relative h-[85vh] bg-gray-200 flex items-center justify-center text-white">
       <div

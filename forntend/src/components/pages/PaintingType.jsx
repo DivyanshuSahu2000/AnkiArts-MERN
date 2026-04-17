@@ -5,10 +5,11 @@ import { FaShoppingCart } from "react-icons/fa";
 import { CartContext } from "../../context/CartContext";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Loader from "../Loader";
 
 const Paintings = () => {
   const { category } = useParams();
-  const { dummyPaintings } = useContext(ItemContext);
+  const { dummyPaintings, loading } = useContext(ItemContext);
 
   const { addToCart } = useContext(CartContext);
   const handleAddToCart = (painting) => {
@@ -26,6 +27,23 @@ const Paintings = () => {
           category.replace(/\s+/g, "").toLowerCase()
       )
     : dummyPaintings;
+
+  if (loading) {
+    return <Loader />;
+  }
+
+  if (filteredPaintings.length === 0) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-[60vh] ">
+        <div className=" ">
+          <img src="/notFound.svg" alt="Item Icon" width="30" height="30" />
+        </div>
+        <h1 className="text-center text-xl font-bold text-zinc-600  mt-1">
+          No paintings found
+        </h1>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col items-center p-3 m-2">

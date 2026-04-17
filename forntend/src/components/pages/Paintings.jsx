@@ -5,6 +5,7 @@ import { ItemContext, ItemProvider } from "../../context/ItemContext";
 import { CartContext } from "../../context/CartContext";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Loader from "../Loader";
 
 const Paintings = () => {
   const { dummyPaintings, loading } = useContext(ItemContext);
@@ -18,17 +19,21 @@ const Paintings = () => {
     });
   };
   if (loading) {
-    return (
-      <div className="flex flex-col items-center justify-center h-screen">
-        <div className="loader"></div>
-        <h4>Loading...</h4>
-      </div>
-    );
+    return <Loader text="Fetching Paintings..." />;
   }
 
   // ✅ Empty state
   if (dummyPaintings.length === 0) {
-    return <h1 className="text-center mt-10">No paintings found</h1>;
+    return (
+      <div className="flex flex-col items-center justify-center min-h-[60vh] ">
+        <div className=" ">
+          <img src="/notFound.svg" alt="Item Icon" width="30" height="30" />
+        </div>
+        <h1 className="text-center text-xl font-bold text-zinc-600  mt-1">
+          No paintings found
+        </h1>
+      </div>
+    );
   }
 
   return (
