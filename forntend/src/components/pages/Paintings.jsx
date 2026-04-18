@@ -44,7 +44,13 @@ const Paintings = () => {
           className="borde-2 bg-zinc-100 rounded-xl p-3  
                        shadow-xl hover:shadow-2xl transition-transform transform hover:-translate-y-2 hover:scale-105 duration-300"
         >
-          <Link key={painting._id} to={`/paintings/${painting._id}`}>
+          <Link
+            key={painting._id}
+            to={`/paintings/${painting._id}`}
+            aria-label="painting"
+          >
+            {/* key={item._id}
+            to={`/paintings/${item._id}`} */}
             <div className="overflow-hidden rounded-lg">
               <img
                 src={`${painting.image}`}
