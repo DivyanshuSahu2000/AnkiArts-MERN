@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import Loader from "../../Loader";
-import { Navigate } from "react-router";
+import { Navigate, useNavigate } from "react-router";
 
 const AdminList = () => {
   const [paintings, setPaintings] = useState([]);
   const [loading, setLoading] = useState(true);
-
+  const navigate = useNavigate();
   // Fetch all paintings
   const fetchPaintings = async () => {
     try {
@@ -44,9 +44,9 @@ const AdminList = () => {
       toast.error("Delete failed ❌");
     }
   };
-  const handleEdit = () => {
-    Navigate(`/admin/${p._id}`);
-  };
+  // const handleEdit = (id) => {
+  //   Navigate(`/admin/${p._id}`);
+  // };
   if (loading) {
     return <Loader text="Fetching Paintings..." />;
   }
@@ -83,7 +83,8 @@ const AdminList = () => {
             {/* Buttons */}
             <div className="flex flex-col gap-1">
               <button
-                onClick={() => handleEdit(p._id)}
+                // onClick={() => handleEdit(p._id)}
+                onClick={() => navigate(`/admin/${p._id}`)}
                 className="bg-blue-500 text-white px-2 py-0.5 sm:px-3 sm:py-1 rounded-md text-[10px] sm:text-sm hover:bg-blue-600 transition cursor-pointer"
               >
                 Edit
