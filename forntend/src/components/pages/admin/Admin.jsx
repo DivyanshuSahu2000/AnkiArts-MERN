@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router";
 import { toast } from "react-toastify";
 
 const Admin = () => {
@@ -18,7 +19,35 @@ const Admin = () => {
       [e.target.name]: e.target.value,
     });
   };
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const isEdit = Boolean(id);
+  ////////////////////
+  useEffect(() => {
+    if (!id) return;
 
+    const fetchPainting = async () => {
+      try {
+        const res = await fetch(`http://localhost:5000/api/paintings/${id}`);
+        const data = await res.json();
+
+        setFormData({
+          title: data.title || "",
+          price: data.price || "",
+          size: data.size || "",
+          category: data.category || "",
+          image: data.image || "",
+          rimage: data.rimage || "",
+          desc: data.desc || "",
+        });
+      } catch (error) {
+        toast.error("Failed to load painting");
+      }
+    };
+
+    fetchPainting();
+  }, [id]);
+  //////////////
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.title.trim()) {
@@ -31,8 +60,14 @@ const Admin = () => {
     }
     setLoading(true);
     try {
-      const res = await fetch("http://localhost:5000/api/paintings", {
-        method: "POST",
+      const url = isEdit
+        ? `http://localhost:5000/api/paintings/${id}`
+        : `http://localhost:5000/api/paintings/`;
+
+      const method = url ? "PUT" : "POST";
+      const res = await fetch(url, {
+        method,
+
         headers: {
           "Content-Type": "application/json",
         },
@@ -51,8 +86,23 @@ const Admin = () => {
       if (!res.ok) {
         throw new Error("Failed to add painting");
       }
-      const data = await res.json();
-      toast.success("Added successfully");
+      toast.success(
+        isEdit ? "Updated successfully ✏️" : "Added successfully ✅"
+      );
+      if (isEdit) {
+        navigate("/admin/list");
+      } else {
+        setFormData({
+          title: "",
+          price: "",
+          size: "",
+          category: "",
+          image: "",
+          rimage: "",
+          desc: "",
+        });
+      }
+      // const data = await res.json();
       setFormData({
         title: "",
         price: "",
@@ -73,7 +123,10 @@ const Admin = () => {
   return (
     <>
       <div className="max-w-3xl mx-auto p-6 py-4 items-center flex flex-col ">
-        <h1 className="text-3xl font-bold mb-4">Admin Panel</h1>
+        <h1 className="text-3xl font-bold mb-4">
+          {" "}
+          {isEdit ? "Update Painting" : "Admin Panel"}
+        </h1>
         <div className="sm:w-4/5 w-full flex flex-col rounded-lg justify-start items-start p-4 py-3 border  bg-white border-gray-200  shadow-[0_0px_15px_rgba(169,165,169,30.01)]">
           <form onSubmit={handleSubmit} className="flex flex-col gap-3 w-full">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -203,7 +256,14 @@ const Admin = () => {
               className="bg-black text-white py-2 rounded active:scale-99"
               disabled={loading}
             >
-              {loading ? "Adding..." : "Add Painting"}
+              {loading
+                ? isEdit
+                  ? "Updating..."
+                  : "Adding..."
+                : isEdit
+                ? "Update Painting"
+                : "Add Painting"}
+              {/* {loading ? "Adding..." : "Add Painting"} */}
             </button>
           </form>
         </div>{" "}

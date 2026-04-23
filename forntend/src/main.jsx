@@ -15,6 +15,7 @@ import PaintingType from "./components/pages/PaintingType.jsx";
 import { CartProvider } from "./context/CartContext.jsx";
 import Cart from "./components/pages/Cart.jsx";
 import Admin from "./components/pages/admin/Admin.jsx";
+import AdminList from "./components/pages/admin/AdminList.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -22,6 +23,8 @@ const router = createBrowserRouter([
     children: [
       { path: "/", element: <Home /> },
       { path: "/admin", element: <Admin /> },
+      { path: "/admin/list", element: <AdminList /> },
+      { path: "/admin/:id", element: <Admin /> },
       { path: "/about", element: <About /> },
       { path: "/contact", element: <Contact /> },
       { path: "/signup", element: <Signup /> },
